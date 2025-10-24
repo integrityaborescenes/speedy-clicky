@@ -1,0 +1,34 @@
+.keyboard__input {
+  display: flex;
+  max-width: 1200px;
+  width: 100%;
+  height: 350px;
+  position: relative;
+}
+
+.input__ontop {
+  position: absolute;
+  left: -2px;
+  top: -2px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  overflow: hidden;
+  font-family: "Noto Sans Mono", monospace;
+  font-size: 28px;
+  color: #4895ef;
+  line-height: normal;
+}
+
+.p__under {
+  border: none;
+  outline: none;
+  user-select: none;
+  font-family: "Noto Sans Mono", monospace;
+  font-size: 28px;
+  line-height: normal;
+  color: #6d7887;
+}
+
+/*# sourceMappingURL=keyboard__input.module.css.map */
