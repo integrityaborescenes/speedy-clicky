@@ -21,8 +21,9 @@
   border: 1px solid #F7F8FB;
   border-radius: 3px;
   user-select: none;
+  cursor: pointer;
 }
-.keyboard__previewRow p {
+.keyboard__previewRow button p {
   user-select: none;
   font-family: "Noto Sans Mono", monospace;
   font-size: 15px;
