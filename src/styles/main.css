@@ -61,7 +61,7 @@ html {
 
 .typing-test {
   max-width: 1200px;
-  height: 1000px;
+  height: 1100px;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -74,7 +74,7 @@ html {
   display: flex;
   flex-direction: column;
   justify-content: start;
-  align-items: center;
+  gap: 50px;
 }
 
 /*# sourceMappingURL=main.css.map */
