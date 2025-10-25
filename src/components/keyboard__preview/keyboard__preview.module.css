@@ -14,8 +14,8 @@
   gap: 15px;
 }
 .keyboard__previewRow button {
-  width: 50px;
-  height: 50px;
+  width: 40px;
+  height: 40px;
   background-color: transparent;
   outline: none;
   border: 1px solid #F7F8FB;
@@ -28,12 +28,13 @@
   user-select: none;
   font-family: "Noto Sans Mono", monospace;
   font-size: 15px;
+  font-weight: lighter;
   line-height: normal;
   color: #F7F8FB;
 }
 .keyboard__previewRow .key__space {
-  width: 350px;
-  height: 50px;
+  width: 258px;
+  height: 40px;
 }
 
 /*# sourceMappingURL=keyboard__preview.module.css.map */

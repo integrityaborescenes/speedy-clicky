@@ -2,7 +2,7 @@ import styles from './keyboard__preview.module.scss'
 
 export default () =>
     `
-    <div class="${styles.keyboard__preview}">
+    <div class="${styles.keyboard__preview}" data-js-keyboard-preview>
        <div class="${styles.keyboard__previewRow}">
            <button class="key__q" value="q">
                 <p>q</p>
