@@ -22,6 +22,7 @@
   border-radius: 3px;
   user-select: none;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 .keyboard__previewRow button p {
   user-select: none;

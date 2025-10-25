@@ -7,4 +7,5 @@ document.querySelector('.typing-test-container').innerHTML = `
   ${keyboard__input()}
   ${keyboard__preview()}
 `
+
 new keyDetect ()

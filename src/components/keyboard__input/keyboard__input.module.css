@@ -8,15 +8,12 @@
 
 .input__ontop {
   position: absolute;
-  left: -2px;
-  top: -2px;
   width: 100%;
   height: 100%;
   background: transparent;
   border: none;
   outline: none;
-  resize: none;
-  overflow: hidden;
+  opacity: 0;
   font-family: "Noto Sans Mono", monospace;
   font-size: 28px;
   color: #4895ef;
