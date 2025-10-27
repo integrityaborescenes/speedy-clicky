@@ -10,6 +10,8 @@ export class keyDetect {
         resultWindow: '[data-js-result-window]',
         tryAgainButton: '[data-js-try-again]',
         resultText: '[data-js-result-count]',
+        timerBlock: '[data-js-timerBlock]',
+        currentTime: '[data-js-current-time]',
         originalText: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.'
     }
 
@@ -25,9 +27,10 @@ export class keyDetect {
         this.tryAgainButton = document.querySelector(this.selectors.tryAgainButton)
         this.resultText = document.querySelector(this.selectors.resultText)
         this.result = document.querySelector(this.selectors.resultWindow)
+        this.timerBlock = document.querySelector(this.selectors.timerBlock)
+        this.currentTime = document.querySelector(this.selectors.currentTime)
 
         this.startTesting()
-        this.isCorrectWord()
     }
 
     startTesting () {
@@ -48,11 +51,16 @@ export class keyDetect {
         })
     }
 
-    resultWindow(errors,characterCount) {
+    resultWindow(errors,characterCount,timer) {
+        if (isNaN(characterCount) || characterCount < this.selectors.originalText.length) {
+            this.resultText.textContent = `К сожалению ты не справился, думаю стоит попробовать еще раз =)`
+        } else {
+            let accurasy = Math.round(((characterCount-errors)/characterCount)*100)
+            this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}%`
+        }
         this.startTesting()
+        this.pauseTimer()
         this.result.style.display = 'flex'
-        let accurasy = Math.round(((characterCount-errors)/characterCount)*100)
-        this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}%`
         this.tryAgainButton.addEventListener('click', (e) => {
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
@@ -92,10 +100,31 @@ export class keyDetect {
             })
     }
 
+    timer () {
+        let c = 0
+        this.timerId = setInterval(() => {
+            c++
+            if (c<120) {
+                if (c<60) {
+                    this.currentTime.innerHTML = `${c}s`
+                } else {
+                    this.currentTime.innerHTML = `1m${c-60}s`
+                }
+            } else {
+                this.resultWindow()
+                clearInterval(this.timerId)
+            }
 
+        },999)
+    }
+
+    pauseTimer () {
+        clearInterval(this.timerId)
+    }
 
     isCorrectWord(originalText) {
        const errorPosition = []
+        this.timer()
         this.textArea.addEventListener('input', (e) => {
             let newMass = this.selectors.originalText.split('')
             for (let i = 0; i < this.textArea.value.length; i++) {
@@ -126,7 +155,7 @@ export class keyDetect {
                         }
                     }
                 } else {
-                    this.resultWindow(errorPosition.length,newMass.length)
+                    this.resultWindow(errorPosition.length,this.textArea.value.length)
                     this.textArea.value = ''
                 }
             }

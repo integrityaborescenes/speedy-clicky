@@ -4,9 +4,12 @@ import keyboard__preview from "./components/keyboard__preview";
 import startGame__window from "./components/start-game__window";
 import {keyDetect} from "./keyDetect.js";
 import result__windows from "./components/result__windows/index.js";
+import timer from "./components/timer/index.js";
+
 
 document.querySelector('.typing-test-container').innerHTML = `
   ${startGame__window()}
+  ${timer()}
   ${keyboard__input()}
   ${keyboard__preview()}
   ${result__windows()}

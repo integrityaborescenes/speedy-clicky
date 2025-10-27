@@ -1,0 +1,14 @@
+@use '../../styles/variables';
+
+.timer {
+  display: flex;
+
+  .currentTimer {
+    user-select: none;
+    font-family: variables.$main-font;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: normal;
+    color: variables.$blue-color;
+  }
+}
