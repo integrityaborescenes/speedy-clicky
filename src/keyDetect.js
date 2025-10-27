@@ -7,6 +7,9 @@ export class keyDetect {
         keyboardButton: 'button',
         startGame: '[data-js-start-game]',
         startGameButton: '[data-js-start-game-button]',
+        resultWindow: '[data-js-result-window]',
+        tryAgainButton: '[data-js-try-again]',
+        resultText: '[data-js-result-count]',
         originalText: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.'
     }
 
@@ -19,6 +22,10 @@ export class keyDetect {
         this.keyboardPreview = document.querySelector(this.selectors.keyboardPreview)
         this.startGame = document.querySelector(this.selectors.startGame)
         this.startGameButton = document.querySelector(this.selectors.startGameButton)
+        this.tryAgainButton = document.querySelector(this.selectors.tryAgainButton)
+        this.resultText = document.querySelector(this.selectors.resultText)
+        this.result = document.querySelector(this.selectors.resultWindow)
+
         this.startTesting()
         this.isCorrectWord()
     }
@@ -26,15 +33,36 @@ export class keyDetect {
     startTesting () {
         this.keyboardInput.style.filter = 'blur(0.2rem)'
         this.keyboardPreview.style.filter = 'blur(0.2rem)'
+        this.keyboardPreview.style.pointerEvents = 'none'
+        this.keyboardInput.style.pointerEvents = 'none'
+        this.result.style.display = 'none'
         this.startGameButton.addEventListener('click', (e) => {
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
             this.startGame.style.display = 'none'
+            this.keyboardPreview.style.pointerEvents = 'auto'
+            this.keyboardInput.style.pointerEvents = 'auto'
             this.textArea.focus()
+            this.whatTheButtonClicked()
+            this.isCorrectWord()
         })
+    }
 
-        this.whatTheButtonClicked()
-        this.isCorrectWord()
+    resultWindow(errors,characterCount) {
+        this.startTesting()
+        this.result.style.display = 'flex'
+        let accurasy = Math.round(((characterCount-errors)/characterCount)*100)
+        this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}%`
+        this.tryAgainButton.addEventListener('click', (e) => {
+            this.keyboardInput.style.filter = 'blur(0)'
+            this.keyboardPreview.style.filter = 'blur(0)'
+            this.result.style.display = 'none'
+            this.keyboardPreview.style.pointerEvents = 'auto'
+            this.keyboardInput.style.pointerEvents = 'auto'
+            this.textArea.focus()
+            this.whatTheButtonClicked()
+            this.isCorrectWord()
+        })
     }
 
 
@@ -53,7 +81,6 @@ export class keyDetect {
                     }
                 }
             })
-            console.log(e)
             })
 
             addEventListener('keyup',(e) => {
@@ -66,21 +93,41 @@ export class keyDetect {
     }
 
 
+
     isCorrectWord(originalText) {
+       const errorPosition = []
         this.textArea.addEventListener('input', (e) => {
-            let countErrors = 0
             let newMass = this.selectors.originalText.split('')
             for (let i = 0; i < this.textArea.value.length; i++) {
-                if (this.textArea.value[i] !==  this.selectors.originalText[i] && this.selectors.originalText[i]!==' ' && this.textArea.value[i]!==' ') {
-                    newMass[i] = `<span style="color: #ef6c75">${this.textArea.value[i]}</span>`
-                    countErrors ++
-                } else if (this.textArea.value[i] ===  this.selectors.originalText[i]){
-                    newMass[i] = `<span style="color: #4895ef">${this.startText.textContent[i]}</span>`
-                } else if (this.selectors.originalText[i] !== ' ' && this.textArea.value[i] === ' ') {
-                    newMass[i] = `<span style="color: #ef6c75">${this.selectors.originalText[i]}</span>`
-                }
-                else if (this.selectors.originalText[i] === ' ' && this.textArea.value[i] !== ' ') {
-                     newMass[i] = `<span style="color: #ef6c75">_</span>`
+                if (this.textArea.value.length < newMass.length && this.result.style.display !== 'flex') {
+                    if (this.textArea.value[i] !==  this.selectors.originalText[i] && this.selectors.originalText[i]!==' ' && this.textArea.value[i]!==' ') {
+                        newMass[i] = `<span style="color: #ef6c75">${this.textArea.value[i]}</span>`
+                        if (errorPosition.includes(i)) {
+
+                        } else {
+                            errorPosition.push(i)
+                        }
+                    } else if (this.textArea.value[i] ===  this.selectors.originalText[i]){
+                        newMass[i] = `<span style="color: #4895ef">${this.startText.textContent[i]}</span>`
+                    } else if (this.selectors.originalText[i] !== ' ' && this.textArea.value[i] === ' ') {
+                        newMass[i] = `<span style="color: #ef6c75">${this.selectors.originalText[i]}</span>`
+                        if (errorPosition.includes(i)) {
+
+                        } else {
+                            errorPosition.push(i)
+                        }
+                    }
+                    else if (this.selectors.originalText[i] === ' ' && this.textArea.value[i] !== ' ') {
+                         newMass[i] = `<span style="color: #ef6c75">_</span>`
+                        if (errorPosition.includes(i)) {
+
+                        } else {
+                            errorPosition.push(i)
+                        }
+                    }
+                } else {
+                    this.resultWindow(errorPosition.length,newMass.length)
+                    this.textArea.value = ''
                 }
             }
             this.startText.innerHTML = newMass.join('')
