@@ -66,6 +66,7 @@ export class keyDetect {
     }
 
     startTesting () {
+        this.timer()
         this.keyboardInput.style.filter = 'blur(0.2rem)'
         this.keyboardPreview.style.filter = 'blur(0.2rem)'
         this.timerBlock.style.filter = 'blur(0.2rem)'
@@ -132,38 +133,38 @@ export class keyDetect {
 
     whatTheButtonClicked() {
         const audio = [
-            new Audio('public/key__sounds/a.wav'),
-            new Audio('public/key__sounds/b.wav'),
-            new Audio('public/key__sounds/c.wav'),
-            new Audio('public/key__sounds/caps_lock.wav'),
-            new Audio('public/key__sounds/d.wav'),
-            new Audio('public/key__sounds/e.wav'),
-            new Audio('public/key__sounds/enter.wav'),
-            new Audio('public/key__sounds/f.wav'),
-            new Audio('public/key__sounds/g.wav'),
-            new Audio('public/key__sounds/h.wav'),
-            new Audio('public/key__sounds/i.wav'),
-            new Audio('public/key__sounds/j.wav'),
-            new Audio('public/key__sounds/k.wav'),
-            new Audio('public/key__sounds/l.wav'),
-            new Audio('public/key__sounds/m.wav'),
-            new Audio('public/key__sounds/n.wav'),
-            new Audio('public/key__sounds/o.wav'),
-            new Audio('public/key__sounds/p.wav'),
-            new Audio('public/key__sounds/q.wav'),
-            new Audio('public/key__sounds/r.wav'),
-            new Audio('public/key__sounds/s.wav'),
-            new Audio('public/key__sounds/shift.wav'),
-            new Audio('public/key__sounds/t.wav'),
-            new Audio('public/key__sounds/tab.wav'),
-            new Audio('public/key__sounds/u.wav'),
-            new Audio('public/key__sounds/v.wav'),
-            new Audio('public/key__sounds/w.wav'),
-            new Audio('public/key__sounds/x.wav'),
-            new Audio('public/key__sounds/y.wav'),
-            new Audio('public/key__sounds/z.wav'),
+            new Audio('/key__sounds/a.wav'),
+            new Audio('/key__sounds/b.wav'),
+            new Audio('/key__sounds/c.wav'),
+            new Audio('/key__sounds/caps_lock.wav'),
+            new Audio('/key__sounds/d.wav'),
+            new Audio('/key__sounds/e.wav'),
+            new Audio('/key__sounds/enter.wav'),
+            new Audio('/key__sounds/f.wav'),
+            new Audio('/key__sounds/g.wav'),
+            new Audio('/key__sounds/h.wav'),
+            new Audio('/key__sounds/i.wav'),
+            new Audio('/key__sounds/j.wav'),
+            new Audio('/key__sounds/k.wav'),
+            new Audio('/key__sounds/l.wav'),
+            new Audio('/key__sounds/m.wav'),
+            new Audio('/key__sounds/n.wav'),
+            new Audio('/key__sounds/o.wav'),
+            new Audio('/key__sounds/p.wav'),
+            new Audio('/key__sounds/q.wav'),
+            new Audio('/key__sounds/r.wav'),
+            new Audio('/key__sounds/s.wav'),
+            new Audio('/key__sounds/shift.wav'),
+            new Audio('/key__sounds/t.wav'),
+            new Audio('/key__sounds/tab.wav'),
+            new Audio('/key__sounds/u.wav'),
+            new Audio('/key__sounds/v.wav'),
+            new Audio('/key__sounds/w.wav'),
+            new Audio('/key__sounds/x.wav'),
+            new Audio('/key__sounds/y.wav'),
+            new Audio('/key__sounds/z.wav'),
         ];
-        const audioSpace = new Audio('public/key__sounds/space.wav')
+        const audioSpace = new Audio('/key__sounds/space.wav')
         addEventListener('keydown', (e) => {
             let randIndex = Math.floor(Math.random()*audio.length)
             if (e.key==='Enter' || e.ctrlKey===true) {
@@ -221,7 +222,6 @@ export class keyDetect {
 
     isCorrectWord(originalText) {
        const errorPosition = []
-        this.timer()
         this.textArea.addEventListener('input', (e) => {
             let newMass = this.originalText.split('')
             for (let i = 0; i < this.textArea.value.length; i++) {
