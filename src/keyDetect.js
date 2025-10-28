@@ -99,12 +99,52 @@ export class keyDetect {
 
 
     whatTheButtonClicked() {
+        const audio = [
+            new Audio('public/key__sounds/a.wav'),
+            new Audio('public/key__sounds/b.wav'),
+            new Audio('public/key__sounds/c.wav'),
+            new Audio('public/key__sounds/caps_lock.wav'),
+            new Audio('public/key__sounds/d.wav'),
+            new Audio('public/key__sounds/e.wav'),
+            new Audio('public/key__sounds/enter.wav'),
+            new Audio('public/key__sounds/f.wav'),
+            new Audio('public/key__sounds/g.wav'),
+            new Audio('public/key__sounds/h.wav'),
+            new Audio('public/key__sounds/i.wav'),
+            new Audio('public/key__sounds/j.wav'),
+            new Audio('public/key__sounds/k.wav'),
+            new Audio('public/key__sounds/l.wav'),
+            new Audio('public/key__sounds/m.wav'),
+            new Audio('public/key__sounds/n.wav'),
+            new Audio('public/key__sounds/o.wav'),
+            new Audio('public/key__sounds/p.wav'),
+            new Audio('public/key__sounds/q.wav'),
+            new Audio('public/key__sounds/r.wav'),
+            new Audio('public/key__sounds/s.wav'),
+            new Audio('public/key__sounds/shift.wav'),
+            new Audio('public/key__sounds/t.wav'),
+            new Audio('public/key__sounds/tab.wav'),
+            new Audio('public/key__sounds/u.wav'),
+            new Audio('public/key__sounds/v.wav'),
+            new Audio('public/key__sounds/w.wav'),
+            new Audio('public/key__sounds/x.wav'),
+            new Audio('public/key__sounds/y.wav'),
+            new Audio('public/key__sounds/z.wav'),
+        ];
+        const audioSpace = new Audio('public/key__sounds/space.wav')
         addEventListener('keydown', (e) => {
+            let randIndex = Math.floor(Math.random()*audio.length)
             if (e.key==='Enter' || e.ctrlKey===true) {
                 e.preventDefault()
             }
+            if (e.key !== ' ') {
+                audio[randIndex].play().catch()
+            } else {
+                audioSpace.play().catch()
+            }
             this.keyboardButton.forEach(x => {
                 if (e.key === x.value) {
+
                     x.style.backgroundColor = '#4895ef'
                     if (e.key !== ' ') {
                         x.style.scale = '0.92'
