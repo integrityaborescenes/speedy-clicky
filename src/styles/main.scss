@@ -8,7 +8,7 @@ html {
 }
 
 .typing-test {
-  max-width: 1200px;
+  max-width: 1000px;
   height: 1000px;
   display: flex;
   margin: 0 auto;
@@ -16,13 +16,12 @@ html {
   align-items: center;
 
   &-container {
-    max-width: 1200px;
+    max-width: 1000px;
     width: 100%;
     height: 500px;
     display: flex;
     flex-direction: column;
-    align-items: center;
     position: relative;
-    gap: 30px;
+    gap: 15px;
   }
 }

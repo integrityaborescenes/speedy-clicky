@@ -1,7 +1,10 @@
 @use '../../styles/variables';
 
 .timer {
+  max-width: 1000px;
   display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 
   .currentTimer {
     user-select: none;
@@ -10,5 +13,14 @@
     font-weight: normal;
     line-height: normal;
     color: variables.$blue-color;
+  }
+
+  .maxRating {
+    user-select: none;
+    font-family: variables.$main-font;
+    font-size: 15px;
+    font-weight: normal;
+    line-height: normal;
+    color: variables.$text-color;
   }
 }

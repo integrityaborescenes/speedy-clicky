@@ -12,6 +12,7 @@ export class keyDetect {
         resultText: '[data-js-result-count]',
         timerBlock: '[data-js-timerBlock]',
         currentTime: '[data-js-current-time]',
+        maxRating: '[data-js-max-rating]',
         originalText: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.'
     }
 
@@ -29,19 +30,26 @@ export class keyDetect {
         this.result = document.querySelector(this.selectors.resultWindow)
         this.timerBlock = document.querySelector(this.selectors.timerBlock)
         this.currentTime = document.querySelector(this.selectors.currentTime)
-
+        this.maxRating = document.querySelector(this.selectors.maxRating)
         this.startTesting()
     }
 
     startTesting () {
         this.keyboardInput.style.filter = 'blur(0.2rem)'
         this.keyboardPreview.style.filter = 'blur(0.2rem)'
+        this.timerBlock.style.filter = 'blur(0.2rem)'
         this.keyboardPreview.style.pointerEvents = 'none'
         this.keyboardInput.style.pointerEvents = 'none'
         this.result.style.display = 'none'
+        if (window.localStorage.getItem('maxRating') === null) {
+            this.maxRating.innerHTML = "У вас еще нет рейтинга (o_0)"
+        } else {
+            this.maxRating.innerHTML = `Ваш максимальный рейтинг: ${window.localStorage.getItem('maxRating')}`
+        }
         this.startGameButton.addEventListener('click', (e) => {
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
+            this.timerBlock.style.filter = 'blur(0)'
             this.startGame.style.display = 'none'
             this.keyboardPreview.style.pointerEvents = 'auto'
             this.keyboardInput.style.pointerEvents = 'auto'
@@ -51,13 +59,26 @@ export class keyDetect {
         })
     }
 
-    resultWindow(errors,characterCount,timer) {
+    resultWindow(errors,characterCount) {
         this.timerBlock.style.visibility = 'hidden'
         if (isNaN(characterCount) || characterCount < this.selectors.originalText.length) {
             this.resultText.textContent = `К сожалению ты не справился, думаю стоит попробовать еще раз =)`
         } else {
+            let words = this.originalText.split(' ').length
             let accurasy = Math.round(((characterCount-errors)/characterCount)*100)
-            this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}% Время: ${this.currentTime.textContent}`
+            let WPM = Math.round((words/this.c)*60)
+            let koefErrors = 1-(errors/characterCount)
+            let rating = Math.round(WPM * (accurasy/100) * koefErrors)
+            if (window.localStorage.getItem('maxRating') >= rating ) {
+
+            } else {
+                window.localStorage.setItem('maxRating',`${rating}`)
+            }
+
+            this.resultText.innerHTML = `Кол-во ошибок: ${errors}<br>
+Аккуратность: ${accurasy}%<br>
+Затраченное время: ${this.currentTime.textContent}<br>
+Рейтинг: ${rating}`
         }
         this.startTesting()
         this.pauseTimer()
@@ -65,6 +86,7 @@ export class keyDetect {
         this.tryAgainButton.addEventListener('click', (e) => {
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
+            this.timerBlock.style.filter = 'blur(0)'
             this.result.style.display = 'none'
             this.timerBlock.style.visibility = 'visible'
             this.keyboardPreview.style.pointerEvents = 'auto'
@@ -103,14 +125,14 @@ export class keyDetect {
     }
 
     timer () {
-        let c = 0
+        this.c = 0
         this.timerId = setInterval(() => {
-            c++
-            if (c<120) {
-                if (c<60) {
-                    this.currentTime.innerHTML = `${c}s`
+            this.c++
+            if ( this.c<120) {
+                if ( this.c<60) {
+                    this.currentTime.innerHTML = `${ this.c}s`
                 } else {
-                    this.currentTime.innerHTML = `1m${c-60}s`
+                    this.currentTime.innerHTML = `1m${ this.c-60}s`
                 }
             } else {
                 this.resultWindow()
@@ -124,6 +146,7 @@ export class keyDetect {
         clearInterval(this.timerId)
     }
 
+
     isCorrectWord(originalText) {
        const errorPosition = []
         this.timer()
@@ -134,7 +157,6 @@ export class keyDetect {
                     if (this.textArea.value[i] !==  this.selectors.originalText[i] && this.selectors.originalText[i]!==' ' && this.textArea.value[i]!==' ') {
                         newMass[i] = `<span style="color: #ef6c75">${this.textArea.value[i]}</span>`
                         if (errorPosition.includes(i)) {
-
                         } else {
                             errorPosition.push(i)
                         }
