@@ -13,11 +13,38 @@ export class keyDetect {
         timerBlock: '[data-js-timerBlock]',
         currentTime: '[data-js-current-time]',
         maxRating: '[data-js-max-rating]',
-        originalText: 'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.'
+        originalText: [
+            'No one shall be subjected to arbitrary arrest, detention or exile. Everyone is entitled in full equality to a fair and public hearing by an independent and impartial tribunal, in the determination of his rights and obligations and of any criminal charge against him.',
+
+            'Every child has the right to education and protection, allowing them to grow in dignity, develop their abilities, and prepare for a responsible life in a free and just society where equality and respect are valued.',
+
+            'Every individual has the right to freedom of movement and residence within the borders of each state. Everyone may leave any country, including his own, and return to it without obstruction or unnecessary delay by any authority or institution.',
+
+            'Everyone has the right to own property alone as well as in association with others, and no one shall be deprived of their property arbitrarily or unlawfully, whether by state decision or by private interference, without fair and lawful compensation.',
+
+            'No person shall be held in slavery or servitude; slavery and the slave trade shall be prohibited in all their forms. Every human being has the right to liberty and personal security under the protection of law.',
+
+            'Everyone has the right to freedom of opinion and expression. This right includes freedom to hold opinions without interference and to seek, receive, and impart information and ideas through any media and regardless of frontiers or restrictions.',
+
+            'All people are equal before the law and are entitled without any discrimination to equal protection of the law. Everyone has the right to equal protection against any incitement to discrimination or violation of human dignity.',
+
+            'Every person has the right to work, to free choice of employment, to just and favorable conditions of labor, and to protection against unemployment, exploitation, or any form of discrimination in the workplace.',
+
+            'Men and women of full age, without any limitation due to race, nationality or religion, have the right to marry and to found a family. They are entitled to equal rights as to marriage, during marriage and at its dissolution.',
+
+            'Everyone has the right to an adequate standard of living for himself and his family, including food, clothing, housing, medical care and necessary social services, and to security in the event of unemployment, sickness or old age.',
+
+            'Every individual has the right to take part in the government of their country, directly or through freely chosen representatives. The will of the people shall be the basis of the authority of government, expressed in genuine elections held periodically.'
+        ]
+
     }
 
     constructor() {
-        this.originalText = document.querySelector(this.selectors.startText).innerHTML = `${this.selectors.originalText}`
+        const randomText = this.selectors.originalText[
+            Math.floor(Math.random() * this.selectors.originalText.length)
+            ];
+        const textElement = document.querySelector(this.selectors.startText).innerHTML = randomText
+        this.originalText = randomText
         this.textArea = document.querySelector(this.selectors.textArea)
         this.startText = document.querySelector(this.selectors.startText)
         this.keyboardButton = document.querySelectorAll(this.selectors.keyboardButton)
@@ -191,26 +218,26 @@ export class keyDetect {
        const errorPosition = []
         this.timer()
         this.textArea.addEventListener('input', (e) => {
-            let newMass = this.selectors.originalText.split('')
+            let newMass = this.originalText.split('')
             for (let i = 0; i < this.textArea.value.length; i++) {
                 if (this.textArea.value.length < newMass.length && this.result.style.display !== 'flex') {
-                    if (this.textArea.value[i] !==  this.selectors.originalText[i] && this.selectors.originalText[i]!==' ' && this.textArea.value[i]!==' ') {
+                    if (this.textArea.value[i] !==  this.originalText[i] && this.originalText[i]!==' ' && this.textArea.value[i]!==' ') {
                         newMass[i] = `<span style="color: #ef6c75">${this.textArea.value[i]}</span>`
                         if (errorPosition.includes(i)) {
                         } else {
                             errorPosition.push(i)
                         }
-                    } else if (this.textArea.value[i] ===  this.selectors.originalText[i]){
+                    } else if (this.textArea.value[i] ===  this.originalText[i]){
                         newMass[i] = `<span style="color: #4895ef">${this.startText.textContent[i]}</span>`
-                    } else if (this.selectors.originalText[i] !== ' ' && this.textArea.value[i] === ' ') {
-                        newMass[i] = `<span style="color: #ef6c75">${this.selectors.originalText[i]}</span>`
+                    } else if (this.originalText[i] !== ' ' && this.textArea.value[i] === ' ') {
+                        newMass[i] = `<span style="color: #ef6c75">${this.originalText[i]}</span>`
                         if (errorPosition.includes(i)) {
 
                         } else {
                             errorPosition.push(i)
                         }
                     }
-                    else if (this.selectors.originalText[i] === ' ' && this.textArea.value[i] !== ' ') {
+                    else if (this.originalText[i] === ' ' && this.textArea.value[i] !== ' ') {
                          newMass[i] = `<span style="color: #ef6c75">_</span>`
                         if (errorPosition.includes(i)) {
 
