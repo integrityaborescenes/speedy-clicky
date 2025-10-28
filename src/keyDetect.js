@@ -40,11 +40,6 @@ export class keyDetect {
     }
 
     constructor() {
-        const randomText = this.selectors.originalText[
-            Math.floor(Math.random() * this.selectors.originalText.length)
-            ];
-        const textElement = document.querySelector(this.selectors.startText).innerHTML = randomText
-        this.originalText = randomText
         this.textArea = document.querySelector(this.selectors.textArea)
         this.startText = document.querySelector(this.selectors.startText)
         this.keyboardButton = document.querySelectorAll(this.selectors.keyboardButton)
@@ -58,7 +53,16 @@ export class keyDetect {
         this.timerBlock = document.querySelector(this.selectors.timerBlock)
         this.currentTime = document.querySelector(this.selectors.currentTime)
         this.maxRating = document.querySelector(this.selectors.maxRating)
+        this.generateNewText()
         this.startTesting()
+    }
+
+    generateNewText () {
+        this.randomText = this.selectors.originalText[
+            Math.floor(Math.random() * this.selectors.originalText.length)
+            ];
+        const textElement = document.querySelector(this.selectors.startText).innerHTML = this.randomText
+        this.originalText = this.randomText
     }
 
     startTesting () {
@@ -111,6 +115,7 @@ export class keyDetect {
         this.startTesting()
         this.result.style.display = 'flex'
         this.tryAgainButton.addEventListener('click', (e) => {
+            this.generateNewText()
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
             this.timerBlock.style.filter = 'blur(0)'
