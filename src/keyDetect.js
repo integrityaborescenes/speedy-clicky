@@ -52,11 +52,12 @@ export class keyDetect {
     }
 
     resultWindow(errors,characterCount,timer) {
+        this.timerBlock.style.visibility = 'hidden'
         if (isNaN(characterCount) || characterCount < this.selectors.originalText.length) {
             this.resultText.textContent = `К сожалению ты не справился, думаю стоит попробовать еще раз =)`
         } else {
             let accurasy = Math.round(((characterCount-errors)/characterCount)*100)
-            this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}%`
+            this.resultText.textContent = `Кол-во ошибок: ${errors} Аккуратность: ${accurasy}% Время: ${this.currentTime.textContent}`
         }
         this.startTesting()
         this.pauseTimer()
@@ -65,6 +66,7 @@ export class keyDetect {
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
             this.result.style.display = 'none'
+            this.timerBlock.style.visibility = 'visible'
             this.keyboardPreview.style.pointerEvents = 'auto'
             this.keyboardInput.style.pointerEvents = 'auto'
             this.textArea.focus()
