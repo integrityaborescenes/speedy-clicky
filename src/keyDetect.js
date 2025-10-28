@@ -87,6 +87,7 @@ export class keyDetect {
     }
 
     resultWindow(errors,characterCount) {
+        this.pauseTimer()
         this.timerBlock.style.visibility = 'hidden'
         if (isNaN(characterCount) || characterCount < this.selectors.originalText.length) {
             this.resultText.textContent = `К сожалению ты не справился, думаю стоит попробовать еще раз =)`
@@ -103,12 +104,11 @@ export class keyDetect {
             }
 
             this.resultText.innerHTML = `Кол-во ошибок: ${errors}<br>
-Аккуратность: ${accurasy}%<br>
-Затраченное время: ${this.currentTime.textContent}<br>
-Рейтинг: ${rating}`
+            Аккуратность: ${accurasy}%<br>
+            Затраченное время: ${this.currentTime.textContent}<br>
+            Рейтинг: ${rating}`
         }
         this.startTesting()
-        this.pauseTimer()
         this.result.style.display = 'flex'
         this.tryAgainButton.addEventListener('click', (e) => {
             this.keyboardInput.style.filter = 'blur(0)'
