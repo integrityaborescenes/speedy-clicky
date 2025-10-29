@@ -29,6 +29,8 @@
   font-size: 25px;
   line-height: normal;
   white-space: pre-wrap;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
 
 .p__under {
@@ -43,4 +45,6 @@
   font-size: 25px;
   line-height: normal;
   color: variables.$text-color;
+  word-wrap: break-word;
+  overflow-wrap: break-word;
 }
