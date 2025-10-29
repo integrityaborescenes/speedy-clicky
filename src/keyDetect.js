@@ -66,7 +66,6 @@ export class keyDetect {
     }
 
     startTesting () {
-        this.timer()
         this.keyboardInput.style.filter = 'blur(0.2rem)'
         this.keyboardPreview.style.filter = 'blur(0.2rem)'
         this.timerBlock.style.filter = 'blur(0.2rem)'
@@ -79,6 +78,7 @@ export class keyDetect {
             this.maxRating.innerHTML = `Ваш максимальный рейтинг: ${window.localStorage.getItem('maxRating')}`
         }
         this.startGameButton.addEventListener('click', (e) => {
+            this.timer()
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
             this.timerBlock.style.filter = 'blur(0)'
@@ -116,6 +116,7 @@ export class keyDetect {
         this.startTesting()
         this.result.style.display = 'flex'
         this.tryAgainButton.addEventListener('click', (e) => {
+            this.timer()
             this.generateNewText()
             this.keyboardInput.style.filter = 'blur(0)'
             this.keyboardPreview.style.filter = 'blur(0)'
@@ -198,6 +199,7 @@ export class keyDetect {
     }
 
     timer () {
+        if (this.timerId) clearInterval(this.timerId);
         this.c = 0
         this.timerId = setInterval(() => {
             this.c++
@@ -212,7 +214,7 @@ export class keyDetect {
                 clearInterval(this.timerId)
             }
 
-        },999)
+        },1000)
     }
 
     pauseTimer () {
